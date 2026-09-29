@@ -1,35 +1,137 @@
 # The Balancing Beam of Performance
 
-A GitHub Pages-ready, interactive portfolio case study using four seasons of anonymized youth gymnastics competition data.
+### A small-data case study in asking a personal question without forcing the data to give me a dramatic answer.
 
-## What is in this repo
+This project uses **four seasons of anonymized youth gymnastics competition data** to revisit an old question:
 
-- **index.html** — the interactive portfolio story. This is the page GitHub Pages serves.
-- **data/gymnastics_public.csv** — anonymized public dataset. Exact meet dates, cities, and family names are intentionally excluded.
-- **R/analysis_refreshed.R** — refreshed R analysis with descriptive statistics, an exact permutation test, HC3 robust standard errors, and secondary exploratory analyses.
+> Did the gymnast perform differently depending on who was in the audience?
 
-## Key finding
+The first version of this project was more exploratory. For the refresh, I came back to the same dataset with a more mature analytics mindset: smaller claims, clearer uncertainty, better treatment of missing data, and methods that fit the sample I actually had.
 
-The original hypothesis was that the gymnast would score higher when her father was the only spectator. In the 27-meet historical sample, Only Dad meets averaged about 35.37 versus 35.72 for all other meets, a difference of about -0.36 points. With only three Only Dad meets, the estimate is highly uncertain. An exact permutation test did not support a meaningful difference, and the level-adjusted estimate was close to zero.
+That change in approach is the part I am most interested in showing.
 
-## Why the analysis changed
+---
 
-The earlier project explored multiple spectator indicators and a random forest. For the refreshed version, the analysis is intentionally simpler because the sample is small. The portfolio emphasizes effect sizes, uncertainty, missingness, an exact permutation test, and a small number of pre-specified regression terms.
+## The short version
 
-Historical meal fields are especially sparse. N/A and blanks are treated as unknown/unusable for the meal question rather than as No. No mean or median imputation is used.
+The historical sample contains **27 meets**.
 
-## Publish with GitHub Pages
+The original hypothesis was that the gymnast would score higher when her father was the only spectator.
 
-1. Create a new GitHub repository.
-2. Upload the contents of this folder so `index.html` is at the repository root.
-3. In GitHub, open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and `/` (root) folder, then save.
+In the observed data:
 
-GitHub will provide a public URL in the form `https://YOUR-USERNAME.github.io/REPO-NAME/`.
+- **Only Dad:** average score ≈ **35.37**
+- **All other meets:** average score ≈ **35.72**
+- observed difference ≈ **-0.36 points**
+- only **3 meets** were in the Only Dad group
 
-Plotly is embedded directly in `index.html`, so the charts do not depend on a separate JavaScript file. The optional brand fonts load from Google Fonts when available and fall back to system fonts otherwise.
+With a comparison group that small, the uncertainty is the story.
+
+An exact permutation test did **not** support a meaningful difference, and the level-adjusted estimate was close to zero.
+
+So the refreshed conclusion is not:
+
+> “I proved who should be in the stands.”
+
+It is:
+
+> **This dataset does not give me strong evidence that spectator configuration meaningfully changed performance.**
+
+That is a much better answer.
+
+---
+
+## What changed in the 2026 refresh
+
+Earlier versions explored more spectator indicators and a random forest.
+
+For this version, I intentionally simplified the analysis.
+
+### I focused on:
+
+- descriptive statistics
+- effect size instead of headline hunting
+- an **exact permutation test**
+- **HC3 robust standard errors**
+- a small number of pre-specified regression terms
+- missingness as a data-quality issue, not something to quietly fill in
+- privacy-safe storytelling around a minor
+
+The sample is small. The analysis should respect that.
+
+---
+
+## Repository contents
+
+```text
+balancing-beam-of-performance/
+├── index.html
+├── README.md
+├── .nojekyll
+├── data/
+│   └── gymnastics_public.csv
+└── R/
+    └── analysis_refreshed.R
+```
+
+### `index.html`
+The interactive portfolio story. Plotly is embedded directly in the page.
+
+### `data/gymnastics_public.csv`
+A deliberately de-identified public dataset.
+
+Exact meet dates, cities, family names, and other identifying details are excluded.
+
+### `R/analysis_refreshed.R`
+The refreshed R workflow containing the descriptive analysis, exact permutation test, HC3 robust-standard-error model, and secondary exploratory work.
+
+---
+
+## Missing data decisions
+
+Historical meal fields are especially sparse.
+
+For those variables:
+
+- `N/A` and blank values are treated as **unknown / unusable**
+- unknown values are **not** recoded to `No`
+- no mean or median imputation is used just to make the column easier to model
+
+If the data was not captured well enough to answer a question, I would rather say that clearly than manufacture precision.
+
+---
+
+## Why this project stays in my portfolio
+
+This is not my largest dataset or most complicated model.
+
+That is exactly why I keep it.
+
+It shows a part of analytics that matters a lot in real work: knowing when **not** to oversell a result.
+
+The project is a good example of how my thinking has changed from:
+
+```text
+Can I find a pattern?
+```
+
+to:
+
+```text
+How strong is the evidence?
+How uncertain is the estimate?
+What can this data actually support?
+What should I leave alone?
+```
+
+---
 
 ## Privacy note
 
-This is a single-athlete case study involving a minor. The public dataset is deliberately de-identified. Keep the original workbook and any file containing exact dates, locations, names, or raw family information out of the public repository.
+This is a single-athlete case study involving a minor.
+
+The public repository is intentionally de-identified. The original workbook and any file containing exact dates, locations, names, or raw family information should remain outside the public repo.
+
+---
+
+**Tools:** R · statistical inference · robust regression · permutation testing · Plotly · GitHub Pages
